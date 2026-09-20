@@ -12,6 +12,9 @@ import {
 
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
+import Signin from "./pages/Signin";
+import Overview from "./pages/Overview";
+import Profile from "./pages/Profile"
 
 import GlobalStyle from "./theme/GlobalStyle";
 
@@ -85,7 +88,20 @@ function App() {
             element={<Signup/>}
               />
 
-          
+                 <Route
+          path="/signin"
+          element={<Signin />}
+        />
+
+          <Route
+          path="/overview"
+          element={<Overview />}
+        />
+
+        <Route
+          path="/profile"
+          element={<Profile />}
+        />
 
         </Routes>
 
