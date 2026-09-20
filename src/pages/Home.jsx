@@ -54,9 +54,7 @@ function Home({
 
       <Main>
 
-        {/* ======================
-            HERO
-        ======================= */}
+        
 
         <Hero>
 
@@ -100,9 +98,7 @@ function Home({
         </Hero>
 
 
-        {/* ======================
-            ABOUT
-        ======================= */}
+      
 
         <Section id="about">
 
@@ -153,9 +149,7 @@ function Home({
         </Section>
 
 
-        {/* ======================
-            SERVICES
-        ======================= */}
+    
 
         <Section id="services">
 
