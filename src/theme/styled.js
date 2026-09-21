@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-/* =================================
+/* 
    APP
-================================= */
+*/
 
 export const AppContainer = styled.div`
   min-height: 100vh;
@@ -14,9 +14,9 @@ export const Main = styled.main`
   flex: 1;
 `;
 
-/* =================================
-   NAVBAR
-================================= */
+
+  //  NAVBAR
+
 
 export const NavbarWrapper = styled.header`
   width: 100%;
@@ -52,33 +52,29 @@ export const Logo = styled.div`
 export const NavLinks = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-
   gap: 9px;
-
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 `;
 
 export const NavButton = styled.button`
-  padding: 8px 17px;
+  width: auto;
+  height: 32px;
+  padding: 0 17px;
 
-  border-radius: 6px;
-
-  border: 1px solid rgba(77, 201, 198, 0.6);
+  border: 1px solid #3e80a6;
+  border-radius: 7px;
 
   background: transparent;
   color: white;
 
   font-size: 12px;
-
   cursor: pointer;
+  white-space: nowrap;
+`;
 
-  transition: all 0.25s ease;
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.secondary};
-    border-color: ${({ theme }) => theme.colors.secondary};
-  }
+export const NavSignup = styled(NavButton)`
+  background: #50c9c3;
+  border-color: #50c9c3;
 `;
 
 export const SignUpButton = styled(NavButton)`
@@ -92,9 +88,9 @@ export const SignUpButton = styled(NavButton)`
   }
 `;
 
-/* =================================
+/* 
    HERO
-================================= */
+*/
 
 export const Hero = styled.section`
   max-width: 1120px;
@@ -199,9 +195,9 @@ export const OutlineButton = styled.button`
   }
 `;
 
-/* =================================
+/* 
    SLIDER
-================================= */
+ */
 
 export const SliderContainer = styled.div`
   position: relative;
@@ -316,9 +312,9 @@ export const SliderDot = styled.button`
       : "#edf0f4"};
 `;
 
-/* =================================
+/* 
    SECTION
-================================= */
+ */
 
 export const Section = styled.section`
   max-width: 900px;
@@ -350,9 +346,9 @@ export const SectionDescription = styled.p`
   color: ${({ theme }) => theme.colors.textLight};
 `;
 
-/* =================================
+/* 
    ABOUT
-================================= */
+ */
 
 export const AboutList = styled.div`
   max-width: 650px;
@@ -391,9 +387,9 @@ export const AboutItem = styled.div`
   font-size: 11px;
 `;
 
-/* =================================
+/* 
    SERVICES
-================================= */
+ */
 
 export const ServicesGrid = styled.div`
   max-width: 800px;
@@ -447,9 +443,9 @@ export const ServiceDescription = styled.p`
   line-height: 1.4;
 `;
 
-/* =================================
+/* 
    FOOTER
-================================= */
+ */
 
 export const FooterWrapper = styled.footer`
   width: 100%;
@@ -501,125 +497,154 @@ export const FooterLinks = styled.div`
 
 
 
-/* =================================
+/* 
    AUTH / SIGNUP PAGE
-================================= */
+ */
+
+
+
+
 
 export const AuthPage = styled.div`
   min-height: 100vh;
-
-  background: ${({ theme }) =>
-    theme.colors.background};
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  padding: 50px 20px;
-`;
-
-export const AuthCard = styled.div`
   width: 100%;
 
-  max-width: 765px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  background: ${({ theme }) =>
-    theme.colors.surface};
+  background: ${({ theme }) => theme.colors.background};
 
-  border-radius: 32px;
+  padding: 24px 20px;
+  box-sizing: border-box;
+`;
 
-  padding: 52px 54px;
+/* Main white card */
+export const AuthCard = styled.div`
+  width: 100%;
+  max-width: 680px;
+
+  background: ${({ theme }) => theme.colors.surface};
+
+  border-radius: 26px;
+
+  padding: 34px 42px;
+
+  box-sizing: border-box;
 
   box-shadow:
-    0 -5px 12px rgba(77, 201, 198, 0.35),
-    0 8px 25px rgba(0, 0, 0, 0.04);
+    0 -4px 12px rgba(77, 201, 198, 0.30),
+    0 8px 24px rgba(0, 0, 0, 0.04);
 
   @media (max-width: 700px) {
-    padding: 35px 25px;
+    max-width: 600px;
+    padding: 30px 30px;
+    border-radius: 24px;
+  }
 
-    border-radius: 22px;
+  @media (max-width: 500px) {
+    padding: 26px 20px;
+    border-radius: 20px;
   }
 `;
 
+/* 
+   TITLE
+ */
+
 export const AuthTitle = styled.h1`
-  font-size: 38px;
+  margin: 0 0 8px;
 
+  font-size: 32px;
   line-height: 1.2;
+  font-weight: 700;
 
-  margin-bottom: 12px;
-
-  color: ${({ theme }) =>
-    theme.colors.text};
+  color: ${({ theme }) => theme.colors.text};
 
   @media (max-width: 600px) {
-    font-size: 30px;
+    font-size: 28px;
   }
 `;
 
 export const AuthSubtitle = styled.p`
-  font-size: 19px;
+  margin: 0 0 26px;
 
-  margin-bottom: 38px;
+  font-size: 16px;
+  line-height: 1.5;
 
-  color: ${({ theme }) =>
-    theme.colors.text};
-
-  @media (max-width: 600px) {
-    font-size: 16px;
-  }
+  color: ${({ theme }) => theme.colors.text};
 `;
+
+/* 
+   FORM
+ */
 
 export const Form = styled.form`
   width: 100%;
 
   display: flex;
-
   flex-direction: column;
 
-  gap: 28px;
+  gap: 19px;
 `;
 
+/* First Name + Last Name */
 export const NameRow = styled.div`
-  display: grid;
+  width: 100%;
 
+  display: grid;
   grid-template-columns: 1fr 1fr;
 
-  gap: 20px;
+  gap: 18px;
 
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
+    gap: 17px;
   }
 `;
 
+/* Password + Confirm Password */
 export const PasswordRow = styled(NameRow)``;
 
-export const FormGroup = styled.div`
-  display: flex;
+/* 
+   FORM GROUP
+ */
 
+export const FormGroup = styled.div`
+  width: 100%;
+
+  display: flex;
   flex-direction: column;
 
-  gap: 9px;
+  gap: 7px;
 `;
 
+/* 
+   LABEL
+ */
+
 export const Label = styled.label`
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 1.2;
 
   font-weight: 700;
 
-  color: ${({ theme }) =>
-    theme.colors.text};
+  color: ${({ theme }) => theme.colors.text};
 `;
+
+/* 
+   INPUT
+ */
 
 export const Input = styled.input`
   width: 100%;
+  height: 52px;
 
-  height: 70px;
+  padding: 0 16px;
 
-  padding: 0 20px;
+  box-sizing: border-box;
 
-  border-radius: 18px;
+  border-radius: 14px;
 
   border: 2px solid
     ${({ theme }) => theme.colors.border};
@@ -630,11 +655,11 @@ export const Input = styled.input`
   color: ${({ theme }) =>
     theme.colors.text};
 
-  font-size: 17px;
+  font-size: 15px;
 
   outline: none;
 
-  transition: 0.25s;
+  transition: 0.2s ease;
 
   &::placeholder {
     color: ${({ theme }) =>
@@ -646,29 +671,83 @@ export const Input = styled.input`
       theme.colors.secondary};
 
     box-shadow:
-      0 0 0 3px rgba(77, 201, 198, 0.12);
+      0 0 0 3px
+      rgba(77, 201, 198, 0.12);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
   }
 `;
 
-export const HelperText = styled.p`
-  font-size: 17px;
+/* 
+   PASSWORD INPUT
+ */
 
-  line-height: 1.25;
+export const PasswordWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+export const PasswordInput = styled(Input)`
+  padding-right: 70px;
+`;
+
+export const TogglePassword = styled.button`
+  position: absolute;
+
+  right: 12px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  border: none;
+  background: transparent;
 
   color: ${({ theme }) =>
-    theme.colors.text};
+    theme.colors.secondary};
 
-  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  padding: 5px;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
+
+export const TogglePasswordButton = styled(TogglePassword)``;
+
+/* 
+   HELPER TEXT
+ */
+
+export const HelperText = styled.p`
+  margin: 2px 0 0;
+
+  font-size: 14px;
+  line-height: 1.3;
+
+  color: ${({ theme }) => theme.colors.text};
+`;
+
+/* 
+   TERMS
+ */
 
 export const TermsRow = styled.label`
   display: flex;
-
   align-items: center;
 
-  gap: 10px;
+  gap: 8px;
 
-  font-size: 17px;
+  margin-top: 1px;
+
+  font-size: 14px;
 
   color: ${({ theme }) =>
     theme.colors.text};
@@ -677,9 +756,10 @@ export const TermsRow = styled.label`
 `;
 
 export const Checkbox = styled.input`
-  width: 18px;
+  width: 16px;
+  height: 16px;
 
-  height: 18px;
+  margin: 0;
 
   accent-color: ${({ theme }) =>
     theme.colors.secondary};
@@ -687,48 +767,105 @@ export const Checkbox = styled.input`
   cursor: pointer;
 `;
 
+/* 
+   SUBMIT BUTTON
+ */
+
 export const SubmitButton = styled.button`
   width: 100%;
+  height: 54px;
 
-  height: 70px;
+  margin-top: 2px;
 
   border: none;
-
-  border-radius: 18px;
+  border-radius: 14px;
 
   background: ${({ theme }) =>
     theme.colors.secondary};
 
-  color: white;
+  color: #ffffff;
 
-  font-size: 20px;
-
+  font-size: 17px;
   font-weight: 700;
 
   cursor: pointer;
 
-  transition: 0.25s;
+  transition: 0.2s ease;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: ${({ theme }) =>
       theme.colors.secondaryHover};
 
     transform: translateY(-1px);
   }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
 `;
 
-export const BottomText = styled.p`
-  margin-top: 30px;
 
-  font-size: 17px;
+
+
+
+export const SigninButton = styled(SubmitButton)``;
+
+/* 
+   FORGOT PASSWORD
+*/
+
+export const ForgotPassword = styled.div`
+  width: 100%;
+
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: -3px;
+`;
+
+export const ForgotPasswordLink = styled.button`
+  border: none;
+  background: transparent;
+
+  color: ${({ theme }) =>
+    theme.colors.secondary};
+
+  font-size: 14px;
+
+  cursor: pointer;
+
+  padding: 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+/* 
+   BOTTOM TEXT
+ */
+
+export const BottomText = styled.p`
+  margin: 20px 0 0;
+
+  font-size: 14px;
+  line-height: 1.4;
 
   color: ${({ theme }) =>
     theme.colors.text};
 `;
 
-export const AuthLink = styled.a`
+export const AuthLink = styled.button`
+  border: none;
+  background: transparent;
+
+  padding: 0;
+
   color: ${({ theme }) =>
     theme.colors.secondary};
+
+  font-size: inherit;
 
   cursor: pointer;
 
@@ -739,18 +876,460 @@ export const AuthLink = styled.a`
   }
 `;
 
+/* 
+   VALIDATION ERRORS
+ */
+
 export const ErrorText = styled.p`
+  margin: 1px 0 0;
+
   color: #d93025;
 
-  font-size: 14px;
-
-  margin-top: -15px;
+  font-size: 12px;
+  line-height: 1.25;
 `;
 
 export const SuccessText = styled.p`
+  margin: 1px 0 0;
+
   color: #159447;
 
+  font-size: 12px;
+  line-height: 1.25;
+`;
+
+
+/* DASHBOARD TOPBAR */
+
+export const TopBar = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 64px;
+
+  background: #0d2b6b;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 28px;
+
+  z-index: 1000;
+
+  box-sizing: border-box;
+`;
+
+export const TopBarTitle = styled.h3`
+  margin: 0;
+
+  font-size: 16px;
+  font-weight: 700;
+`;
+
+export const TopBarButton = styled.button`
+  background: transparent;
+
+  border: 1px solid #4dc9c6;
+  color: white;
+
+  padding: 8px 18px;
+
+  border-radius: 7px;
+
+  font-size: 12px;
+
+  cursor: pointer;
+
+  &:hover {
+    background: #4dc9c6;
+  }
+`;
+
+/*  DASHBOARD  */
+
+export const DashboardWrapper = styled.div`
+  padding-top: 64px;
+  min-height: 100vh;
+
+  background: #f4f6f8;
+`;
+
+/*  SIDEBAR */
+
+export const Sidebar = styled.aside`
+  position: fixed;
+
+  top: 64px;
+  left: 0;
+  bottom: 0;
+
+  width: 230px;
+
+  background: #ffffff;
+
+  border-right: 1px solid #dce5e8;
+
+  padding: 20px 15px;
+
+  box-sizing: border-box;
+
+  overflow-y: auto;
+
+  z-index: 900;
+`;
+
+export const UserBox = styled.div`
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid #e5eaea;
+`;
+
+export const Avatar = styled.div`
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+
+  background: #173875;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 12px;
+  font-weight: 700;
+`;
+
+export const UserDetails = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  strong {
+    font-size: 12px;
+  }
+
+  span {
+    font-size: 9px;
+    color: #777;
+  }
+`;
+
+export const SidebarSection = styled.div`
+  margin-top: 25px;
+`;
+
+export const SidebarTitle = styled.div`
+  font-size: 9px;
+
+  font-weight: 700;
+
+  color: #555;
+
+  margin-bottom: 8px;
+`;
+
+export const SidebarLink = styled.button`
+  width: 100%;
+
+  border: none;
+
+  background: ${({ active }) =>
+    active ? "#eef8f8" : "transparent"};
+
+  color: #333;
+
+  text-align: left;
+
+  padding: 9px 12px;
+
+  border-radius: 7px;
+
+  margin-bottom: 3px;
+
+  font-size: 11px;
+
+  cursor: pointer;
+
+  &:hover {
+    background: #eef8f8;
+  }
+`;
+
+/*  CONTENT  */
+
+export const DashboardContent = styled.main`
+  margin-left: 230px;
+
+  min-height: calc(100vh - 64px);
+
+  padding: 30px;
+
+  box-sizing: border-box;
+`;
+
+// Overview
+
+export const OverviewWrapper = styled.div`
+  padding: 35px;
+`;
+
+export const WelcomeCard = styled.div`
+  width: 100%;
+  max-width: 1060px;
+  margin: 0 auto;
+
+  padding: 38px 55px 48px;
+
+  background: #faf9ff;
+
+  border: 2px solid #a8e3df;
+  border-radius: 30px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+`;
+
+export const WelcomeTitle = styled.h1`
+  margin: 0 0 18px;
+
+  font-size: 25px;
+  font-weight: 700;
+  color: #111827;
+`;
+
+export const WelcomeText = styled.p`
+  margin: 0 0 38px;
+
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+`;
+
+export const InfoGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+`;
+
+export const InfoCard = styled.div`
+  min-height: 150px;
+  padding: 25px 20px;
+
+  background: #f8f8fa;
+
+  border: 2px solid #a8e1de;
+  border-radius: 18px;
+`;
+
+export const InfoTitle = styled.h3`
+  margin: 0 0 15px;
+  font-size: 18px;
+  color: #222;
+`;
+
+export const InfoText = styled.p`
+  min-height: 48px;
+  margin: 0;
+
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+`;
+
+export const ProgressBar = styled.div`
+  width: 100%;
+  height: 6px;
+
+  margin-top: 18px;
+
+  background: #dfe5e8;
+  border-radius: 10px;
+`;
+
+export const Progress = styled.div`
+  width: 100%;
+  height: 100%;
+
+  background: #102d6b;
+  border-radius: 10px;
+`;
+
+export const QuickTitle = styled.h3`
+  margin: 58px 0 25px;
+
+  font-size: 18px;
+  color: #222;
+`;
+
+export const QuickGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+`;
+
+export const QuickCard = styled.div`
+  min-height: 120px;
+  padding: 30px;
+
+  background: #f8f8fa;
+
+  border: 2px solid #a8e1de;
+  border-radius: 18px;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+`;
+
+export const QuickCardTitle = styled.h3`
+  margin: 0 0 10px;
+  font-size: 18px;
+`;
+
+export const QuickCardText = styled.p`
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+`;
+
+// Profile
+
+export const ProfileWrapper = styled.div`
+  padding: 35px;
+`;
+
+export const ProfileCard = styled.div`
+  width: 100%;
+  max-width: 1060px;
+
+  margin: 0 auto;
+  padding: 25px 50px 32px;
+
+  background: #faf9ff;
+
+  border: 2px solid #9ee3df;
+  border-radius: 30px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+`;
+
+export const ProfileTitle = styled.h1`
+  margin: 0 0 25px;
+
+  font-size: 23px;
+  font-weight: 700;
+  color: #111827;
+`;
+export const Sectionname = styled.h2`
+  margin: 25px 0 18px;
+text-align:left;
+  font-size: 20px;
+  
+`;
+
+
+
+
+
+export const FormGrid = styled.div`
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  column-gap: 36px;
+  row-gap: 25px;
+
+  margin-bottom: 38px;
+`;
+
+
+
+export const TextArea = styled.textarea`
+  width: 100%;
+  height: 100px;
+
+  padding: 18px 28px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: #f0f1f3;
+
+  color: #222;
   font-size: 14px;
 
-  margin-top: -15px;
+  resize: none;
+  outline: none;
+
+  margin-bottom: 30px;
+
+  &:focus {
+    border: 2px solid #9ee3df;
+    background: #fff;
+  }
+`;
+
+export const ButtonRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+
+  margin-top: 5px;
+`;
+
+export const CancelButton = styled.button`
+  min-width: 200px;
+  height: 58px;
+
+  border: 2px solid #9ee3df;
+  border-radius: 16px;
+
+  background: transparent;
+
+  color: #555;
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  &:hover {
+    background: #f0ffff;
+  }
+`;
+
+export const SaveButton = styled.button`
+  min-width: 200px;
+  height: 58px;
+
+  border: none;
+  border-radius: 16px;
+
+  background: #4fc9c4;
+
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  &:hover {
+    background: #3db8b3;
+  }
 `;

@@ -141,7 +141,7 @@ function Signup() {
 
         <Form onSubmit={handleSubmit}>
 
-          {/* FIRST + LAST NAME */}
+          
 
           <NameRow>
 
@@ -172,7 +172,7 @@ function Signup() {
           </NameRow>
 
 
-          {/* EMAIL */}
+          
 
           <FormGroup>
             <Label>Email Address:</Label>
@@ -187,7 +187,7 @@ function Signup() {
           </FormGroup>
 
 
-          {/* PASSWORD */}
+          
 
           <PasswordRow>
 
@@ -224,7 +224,7 @@ function Signup() {
           </PasswordRow>
 
 
-          {/* TERMS */}
+          
 
           <TermsRow>
 
@@ -242,7 +242,7 @@ function Signup() {
           </TermsRow>
 
 
-          {/* ERROR */}
+        
 
           {error && (
             <ErrorText>
@@ -250,7 +250,7 @@ function Signup() {
             </ErrorText>
           )}
 
-          {/* SUCCESS */}
+          
 
           {success && (
             <SuccessText>
@@ -259,7 +259,7 @@ function Signup() {
           )}
 
 
-          {/* BUTTON */}
+          
 
           <SubmitButton type="submit">
             Create Account
@@ -268,11 +268,11 @@ function Signup() {
         </Form>
 
 
-        {/* SIGN IN */}
+        
 
         <BottomText>
           Already have account?{" "}
-          <AuthLink as={Link} to="/">
+          <AuthLink as={Link} to="/signin">
             Sign in
           </AuthLink>
         </BottomText>
