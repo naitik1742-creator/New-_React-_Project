@@ -8,6 +8,7 @@ import {
   NavLinks,
   NavButton,
   SignUpButton,
+  LoginButton,
 } from "../theme/styled";
 
 
@@ -48,13 +49,12 @@ function Navbar({ toggleTheme, darkMode }) {
             {darkMode ? "Light" : "Theme"}
           </NavButton>
 
-          <NavButton
-            onClick={() =>
-              alert("Login page coming soon!")
-            }
-          >
-            Login
-          </NavButton>
+         <LoginButton
+  onClick={() => navigate("/signin")}
+>
+  Login
+</LoginButton>
+
 <SignUpButton
   onClick={() => navigate("/signup")}
 >

@@ -35,25 +35,25 @@ function Signin() {
     const users =
       JSON.parse(localStorage.getItem("registeredUsers")) || [];
 
-    // Find matching user
+    
     const user = users.find(
       (item) =>
         item.email.toLowerCase() === email.trim().toLowerCase() &&
         item.password === password
     );
 
-    if (user) {
+    // if (user) {
       
-      localStorage.setItem(
-        "loggedInUser",
-        JSON.stringify(user)
-      );
+    //   localStorage.setItem(
+    //     "loggedInUser",
+    //     JSON.stringify(user)
+    //   );
 
       
-      navigate("/");
-    } else {
-      alert("Invalid email or password.");
-    }
+    //   navigate("/");
+    // } else {
+    //   alert("");
+    // }
   };
 
   return (
@@ -115,7 +115,7 @@ function Signin() {
             </PasswordWrapper>
           </FormGroup>
 
-          {/* Forgot Password */}
+        
           <ForgotPassword
             type="button"
             onClick={() =>
@@ -125,14 +125,14 @@ function Signin() {
             Forgot password?
           </ForgotPassword>
 
-          {/* Login */}
+          
           <SubmitButton type="submit">
             Sign in
           </SubmitButton>
 
         </Form>
 
-        {/* Create Account */}
+        
         <BottomText>
           New to WebTech Practice?{" "}
 

@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+
+import { useNavigate,useLocation } from "react-router-dom";
 
 import {
   TopBar,
@@ -18,6 +18,7 @@ import {
 
 function DashboardLayout({ children }) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <>
@@ -49,25 +50,26 @@ function DashboardLayout({ children }) {
           <SidebarSection>
             <SidebarTitle>DASHBOARD</SidebarTitle>
 
-            <SidebarLink
-              active
+            <SidebarLink active={location.pathname === "/overview"}
+              
               onClick={() => navigate("/overview")}
             >
               Overview
             </SidebarLink>
 
-            <SidebarLink
+            <SidebarLink active={location.pathname === "/profile"}
+            
               onClick={() => navigate("/profile")}
             >
               Profile Settings
             </SidebarLink>
 
-            <SidebarLink
+            <SidebarLink active={location.pathname === "/security"}
             onClick={() => navigate("/security")}>
               Security
             </SidebarLink>
 
-            <SidebarLink
+            <SidebarLink active={location.pathname === "/notification"}
             onClick={() => navigate("/notification")}>
               Notification
             </SidebarLink>
@@ -76,8 +78,8 @@ function DashboardLayout({ children }) {
           <SidebarSection>
             <SidebarTitle>QUICK ACTION</SidebarTitle>
 
-            <SidebarLink
-            onClick={() => navigate("/help")}>
+            <SidebarLink active={location.pathname === "/helpsupport"}
+            onClick={() => navigate("/helpsupport")}>
               Help & Support
             </SidebarLink>
           </SidebarSection>

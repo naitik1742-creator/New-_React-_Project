@@ -1,13 +1,17 @@
+import {  useNavigate } from "react-router-dom";
+
 import {
   FooterWrapper,
   FooterContainer,
   Copyright,
   FooterLinks,
   NavButton,
+  LoginButton,
   SignUpButton,
 } from "../theme/styled";
 
 function Footer({ toggleTheme }) {
+const navigate = useNavigate();
 
   const goToSection = (id) => {
     document
@@ -49,17 +53,17 @@ function Footer({ toggleTheme }) {
             Theme
           </NavButton>
 
-          <NavButton
+          <LoginButton
             onClick={() =>
-              alert("Login page coming soon!")
+              navigate("/signin")
             }
           >
             Login
-          </NavButton>
+          </LoginButton>
 
           <SignUpButton
             onClick={() =>
-              alert("Sign Up page coming soon!")
+              navigate("/SignUp")
             }
           >
             Sign Up
