@@ -83,7 +83,7 @@ function Home({
 
               <OutlineButton
                 onClick={() =>
-                  alert("Login clicked!")
+                  navigate("/Signin")
                 }
               >
                 I already have an account

@@ -14,7 +14,10 @@ import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Overview from "./pages/Overview";
-import Profile from "./pages/Profile"
+import Profile from "./pages/Profile";
+import Security from "./pages/Security";
+import Notification from "./pages/Notification";
+import HelpSupport from "./pages/HelpSupport";
 
 import GlobalStyle from "./theme/GlobalStyle";
 
@@ -22,6 +25,7 @@ import {
   lightTheme,
   darkTheme,
 } from "./theme/theme";
+
 
 function App() {
 
@@ -92,7 +96,7 @@ function App() {
           path="/signin"
           element={<Signin />}
         />
-
+         
           <Route
           path="/overview"
           element={<Overview />}
@@ -101,6 +105,21 @@ function App() {
         <Route
           path="/profile"
           element={<Profile />}
+        />
+
+        <Route
+          path="/security"
+          element={<Security />}
+        />
+
+        <Route
+          path="/notification"
+          element={<Notification />}
+        />
+
+        <Route
+          path="/helpsupport"
+          element={<HelpSupport />}
         />
 
         </Routes>

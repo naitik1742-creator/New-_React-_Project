@@ -14,7 +14,7 @@ export const lightTheme = {
     border: "#bde9e8",
     sliderBorder: "#9caed0",
 
-    white: "#ffffff",
+    white: "#F1F3F4",
   },
 };
 
