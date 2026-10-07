@@ -106,7 +106,7 @@ function Overview() {
         <QuickGrid>
 
           <QuickCard>
-            <QuickCardTitle>
+            <QuickCardTitle >
               Edit Profile
             </QuickCardTitle>
 

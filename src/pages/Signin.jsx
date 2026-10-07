@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import SigninForm from "../forms/SigninForm";
+
 import {
   AuthPage,
   AuthCard,
@@ -17,44 +19,42 @@ import {
   SubmitButton,
   BottomText,
   AuthLink,
+  ErrorText,
+  HelperText,
 } from "../theme/styled";
 
 function Signin() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
- 
-    navigate("/overview");
-    
+  const handleLogin = (values) => {
     const users =
       JSON.parse(localStorage.getItem("registeredUsers")) || [];
 
-    
     const user = users.find(
       (item) =>
-        item.email.toLowerCase() === email.trim().toLowerCase() &&
-        item.password === password
+        item.email.toLowerCase() ===
+          values.email.trim().toLowerCase() &&
+        item.password === values.password
     );
 
-    // if (user) {
-      
-    //   localStorage.setItem(
-    //     "loggedInUser",
-    //     JSON.stringify(user)
-    //   );
+    if (!user) {
+      alert("Invalid email or password !");
+      return;
+    }
 
-      
-    //   navigate("/");
-    // } else {
-    //   alert("");
-    // }
+    localStorage.setItem(
+      "loggedInUser",
+      JSON.stringify(user)
+    );
+
+    navigate("/overview");
   };
+
+  const formik = SigninForm({
+    onSubmit: handleLogin,
+  });
 
   return (
     <AuthPage>
@@ -68,25 +68,37 @@ function Signin() {
           Sign in to continue to your dashboard
         </AuthSubtitle>
 
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={formik.handleSubmit}>
 
-          
+          {/* EMAIL */}
           <FormGroup>
+
             <Label htmlFor="email">
               Email Address:
             </Label>
 
             <Input
               id="email"
+              name="email"
               type="email"
               placeholder="Enter your email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
+
+            {formik.touched.email &&
+              formik.errors.email && (
+                <ErrorText>
+                  {formik.errors.email}
+                </ErrorText>
+              )}
+
           </FormGroup>
 
-          
+          {/* PASSWORD */}
           <FormGroup>
+
             <Label htmlFor="password">
               Password:
             </Label>
@@ -95,49 +107,72 @@ function Signin() {
 
               <PasswordInput
                 id="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) =>
-                  setPassword(e.target.value)
+                name="password"
+                type={
+                  showPassword
+                    ? "text"
+                    : "password"
                 }
+                placeholder="Enter your password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
 
               <TogglePassword
                 type="button"
                 onClick={() =>
-                  setShowPassword(!showPassword)
+                  setShowPassword(
+                    !showPassword
+                  )
                 }
               >
                 {showPassword ? "Hide" : "Show"}
               </TogglePassword>
 
             </PasswordWrapper>
+
+            {formik.touched.password &&
+              formik.errors.password && (
+                <ErrorText>
+                  {formik.errors.password}
+                </ErrorText>
+              )}
+
           </FormGroup>
 
-        
+          <HelperText>
+    Password must be at least 6 characters long.
+  </HelperText>
+
+          {/* FORGOT PASSWORD */}
           <ForgotPassword
             type="button"
             onClick={() =>
-              alert("")
+              alert(
+                ""
+              )
             }
           >
             Forgot password?
           </ForgotPassword>
 
-          
+
+          {/* SIGN IN */}
           <SubmitButton type="submit">
             Sign in
           </SubmitButton>
 
         </Form>
 
-        
+        {/* REGISTER */}
         <BottomText>
           New to WebTech Practice?{" "}
 
           <AuthLink
-            onClick={() => navigate("/signup")}
+            onClick={() =>
+              navigate("/signup")
+            }
           >
             Create an account
           </AuthLink>

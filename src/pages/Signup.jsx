@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
 
 import {
   AuthPage,
@@ -22,110 +22,72 @@ import {
   SuccessText,
 } from "../theme/styled";
 
+import SignupSchema from "../validation/SignupSchema";
+
 function Signup() {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    terms: false,
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      terms: false,
+    },
+
+    validationSchema: SignupSchema,
+
+    onSubmit: (values, { setFieldError }) => {
+      const users =
+        JSON.parse(
+          localStorage.getItem("registeredUsers")
+        ) || [];
+
+      // Check duplicate email
+      const emailExists = users.some(
+        (user) =>
+          user.email.toLowerCase() ===
+          values.email.trim().toLowerCase()
+      );
+
+      if (emailExists) {
+        setFieldError(
+          "email",
+          "Email is already registered. Try another email."
+        );
+        return;
+      }
+
+      // User data
+      const user = {
+        firstName: values.firstName.trim(),
+        lastName: values.lastName.trim(),
+        email: values.email.trim(),
+        password: values.password,
+      };
+
+      // Save user
+      localStorage.setItem(
+        "registeredUsers",
+        JSON.stringify([
+          ...users,
+          user,
+        ])
+      );
+
+      // Optional current user
+      localStorage.setItem(
+        "webtechUser",
+        JSON.stringify(user)
+      );
+
+      alert("Account created successfully!");
+
+      navigate("/signin");
+    },
   });
-
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
-
-    setError("");
-    setSuccess("");
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      confirmPassword,
-      terms,
-    } = formData;
-
-    if (
-      !firstName ||
-      !lastName ||
-      !email ||
-      !password ||
-      !confirmPassword
-    ) {
-      setError("Please fill in all fields.");
-      return;
-    }
-
-    if (!email.includes("@")) {
-      setError("Please enter a valid email address.");
-      return;
-    }
-
-    if (password.length < 8) {
-      setError(
-        "Password must contain at least 8 characters."
-      );
-      return;
-    }
-
-    if (!/[A-Za-z]/.test(password)) {
-      setError(
-        "Password must contain at least one letter."
-      );
-      return;
-    }
-
-    if (!/[0-9]/.test(password)) {
-      setError(
-        "Password must contain at least one number."
-      );
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-
-    if (!terms) {
-      setError("Please agree to the Terms.");
-      return;
-    }
-
-    const user = {
-      firstName,
-      lastName,
-      email,
-      password,
-    };
-
-    localStorage.setItem(
-      "webtechUser",
-      JSON.stringify(user)
-    );
-
-    setSuccess("Account created successfully!");
-
-    setTimeout(() => {
-      navigate("/");
-    }, 1200);
-  };
 
   return (
     <AuthPage>
@@ -139,67 +101,102 @@ function Signup() {
           Sign up to access the practice dashboard.
         </AuthSubtitle>
 
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={formik.handleSubmit}>
 
-          
+          {/* FIRST + LAST NAME */}
 
           <NameRow>
 
             <FormGroup>
-              <Label>First name:</Label>
+              <Label htmlFor="firstName">
+                First name:
+              </Label>
 
               <Input
+                id="firstName"
                 type="text"
                 name="firstName"
                 placeholder="Enter First Name"
-                value={formData.firstName}
-                onChange={handleChange}
+                value={formik.values.firstName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
+
+              {formik.touched.firstName &&
+                formik.errors.firstName && (
+                  <ErrorText>
+                    {formik.errors.firstName}
+                  </ErrorText>
+                )}
             </FormGroup>
 
             <FormGroup>
-              <Label>Last Name:</Label>
+              <Label htmlFor="lastName">
+                Last Name:
+              </Label>
 
               <Input
+                id="lastName"
                 type="text"
                 name="lastName"
                 placeholder="Enter Last Name"
-                value={formData.lastName}
-                onChange={handleChange}
+                value={formik.values.lastName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
+
+              {formik.touched.lastName &&
+                formik.errors.lastName && (
+                  <ErrorText>
+                    {formik.errors.lastName}
+                  </ErrorText>
+                )}
             </FormGroup>
 
           </NameRow>
 
-
-          
+          {/* EMAIL */}
 
           <FormGroup>
-            <Label>Email Address:</Label>
+            <Label htmlFor="email">
+              Email Address:
+            </Label>
 
             <Input
+              id="email"
               type="email"
               name="email"
               placeholder="Enter your email address"
-              value={formData.email}
-              onChange={handleChange}
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
+
+            {formik.touched.email &&
+              formik.errors.email && (
+                <ErrorText>
+                  {formik.errors.email}
+                </ErrorText>
+              )}
           </FormGroup>
 
-
-          
+          {/* PASSWORD */}
 
           <PasswordRow>
 
             <FormGroup>
-              <Label>Password:</Label>
+              <Label htmlFor="password">
+                Password:
+              </Label>
 
               <Input
+                id="password"
                 type="password"
                 name="password"
                 placeholder="Enter Password"
-                value={formData.password}
-                onChange={handleChange}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
 
               <HelperText>
@@ -207,32 +204,53 @@ function Signup() {
                 <br />
                 letter & number
               </HelperText>
+
+              {formik.touched.password &&
+                formik.errors.password && (
+                  <ErrorText>
+                    {formik.errors.password}
+                  </ErrorText>
+                )}
             </FormGroup>
 
+            {/* CONFIRM PASSWORD */}
+
             <FormGroup>
-              <Label>Confirm Password:</Label>
+              <Label htmlFor="confirmPassword">
+                Confirm Password:
+              </Label>
 
               <Input
+                id="confirmPassword"
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm Password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
+                value={formik.values.confirmPassword}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
+
+              {formik.touched.confirmPassword &&
+                formik.errors.confirmPassword && (
+                  <ErrorText>
+                    {formik.errors.confirmPassword}
+                  </ErrorText>
+                )}
             </FormGroup>
 
           </PasswordRow>
 
-
-          
+          {/* TERMS */}
 
           <TermsRow>
 
             <Checkbox
+              id="terms"
               type="checkbox"
               name="terms"
-              checked={formData.terms}
-              onChange={handleChange}
+              checked={formik.values.terms}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
 
             <span>
@@ -241,37 +259,37 @@ function Signup() {
 
           </TermsRow>
 
+          {formik.touched.terms &&
+            formik.errors.terms && (
+              <ErrorText>
+                {formik.errors.terms}
+              </ErrorText>
+            )}
 
-        
+          {/* SUCCESS */}
 
-          {error && (
-            <ErrorText>
-              {error}
-            </ErrorText>
-          )}
-
-          
-
-          {success && (
+          {formik.status && (
             <SuccessText>
-              {success}
+              {formik.status}
             </SuccessText>
           )}
 
+          {/* SUBMIT */}
 
-          
-
-          <SubmitButton type="submit">
+          <SubmitButton
+            type="submit"
+            disabled={formik.isSubmitting}
+          >
             Create Account
           </SubmitButton>
 
         </Form>
 
-
-        
+        {/* SIGN IN */}
 
         <BottomText>
           Already have account?{" "}
+
           <AuthLink as={Link} to="/signin">
             Sign in
           </AuthLink>
@@ -280,9 +298,6 @@ function Signup() {
       </AuthCard>
     </AuthPage>
   );
-
-
-  
 }
 
 export default Signup;
