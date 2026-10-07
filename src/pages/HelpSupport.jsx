@@ -59,7 +59,7 @@ const HelpSupport = () => {
 
         <SupportSection>
           <SupportTitle>
-            <SectionIcon>⌕</SectionIcon>
+            <SectionIcon></SectionIcon>
             Contact Support
           </SupportTitle>
 

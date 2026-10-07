@@ -694,7 +694,7 @@ export const AuthPage = styled.div`
 /* Main white card */
 export const AuthCard = styled.div`
   width: 100%;
-  max-width: 680px;
+  max-width: 560px;
 
   background: ${({ theme }) => theme.colors.surface};
 
@@ -703,7 +703,8 @@ export const AuthCard = styled.div`
   padding: 34px 42px;
 
   box-sizing: border-box;
-
+ 
+   border-top: 4px solid #79deda;
   box-shadow:
     0 -4px 12px rgba(77, 201, 198, 0.30),
     0 8px 24px rgba(0, 0, 0, 0.04);
@@ -992,6 +993,7 @@ export const ForgotPassword = styled.div`
 
   display: flex;
   justify-content: flex-end;
+  color: #43b8b2;
 
   margin-top: -3px;
 `;
@@ -1389,7 +1391,7 @@ export const DashboardContent = styled.main`
 // Overview Page
 
 export const OverviewWrapper = styled.div`
-  padding: 35px;
+  padding: 0px;
 `;
 
 export const WelcomeCard = styled.div`
@@ -1397,11 +1399,12 @@ export const WelcomeCard = styled.div`
   max-width: 1060px;
   margin: 0 auto;
 
-  padding: 38px 55px 48px;
+  padding: 38px 55px 30px;
 
   background: #faf9ff;
+  border: 2px solid #bcefed;
 
-  border: 2px solid #a8e3df;
+  border-top: 4px solid #79deda;
   border-radius: 30px;
 
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -1531,6 +1534,8 @@ export const ProfileCard = styled.div`
 
   background: #faf9ff;
 
+  border-top: 4px solid #79deda;
+
   border: 2px solid #9ee3df;
   border-radius: 30px;
 
@@ -1654,7 +1659,7 @@ export const SecurityPageCard = styled.div`
   padding: 34px 40px;
 
   background: #ffffff;
-
+border-top: 4px solid #79deda;
   border: 2px solid #bcefed;
 
   border-radius: 24px;
@@ -1907,6 +1912,7 @@ export const NotificationGrid = styled.div`
 
 export const NotificationBox = styled.div`
   border: 2px solid #a8dedc;
+  border-top: 4px solid #79deda;
   border-radius: 16px;
   padding: 22px 26px;
   background: #f8f9fa;
@@ -1992,97 +1998,159 @@ export const ActivityIcon = styled.div`
 // Help & Support
 
 export const PageContent = styled.main`
-  margin-left: 80px;
-  padding: 30px 28px 40px;
+  margin-left: 20px;
+  padding: 0px;
+
   min-height: 100vh;
-  background: #f4f6f8;
   box-sizing: border-box;
+
+  background: #f4f6f8;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  @media (max-width: 900px) {
+    margin-left: 200px;
+    padding: 82px 24px 25px;
+  }
+
+  @media (max-width: 700px) {
+    margin-left: 0;
+    padding: 78px 18px 25px;
+  }
 `;
 
 export const ContentCard = styled.div`
   width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
+  max-width: 1000px;
+
   background: #ffffff;
+  border-top: 4px solid #79deda;
   border: 2px solid #bcefed;
   border-radius: 24px;
-  padding: 32px 40px;
+
+  padding: 30px 36px;
+
   box-sizing: border-box;
-  box-shadow: 0 3px 12px rgba(77, 201, 198, 0.12);
+
+  box-shadow:
+    0 0 12px rgba(77, 201, 198, 0.18),
+    0 5px 18px rgba(0, 0, 0, 0.05);
+
+  @media (max-width: 700px) {
+    padding: 25px 22px;
+    border-radius: 20px;
+  }
 `;
 
 export const PageTitle = styled.h1`
-  margin: 0 0 32px;
-  font-size: 24px;
+  margin: 0 0 26px;
+
+  font-size: 26px;
+  line-height: 1.2;
   font-weight: 700;
+
   color: #111827;
 `;
 
 export const STitle = styled.h2`
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin: 0 0 24px;
+  gap: 10px;
+
+  margin: 0 0 18px;
+
   font-size: 18px;
+  line-height: 1.3;
+
   color: #111827;
 `;
 
 export const SectionIcon = styled.span`
+  width: 30px;
+  height: 30px;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+
+  border-radius: 8px;
+
+  background: #e8fafa;
   color: #4dc9c6;
-  font-size: 22px;
+
+  font-size: 17px;
   font-weight: 700;
+
+  flex-shrink: 0;
 `;
 
 export const FAQContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 18px;
+
+  gap: 12px;
 `;
 
 export const FAQItem = styled.div`
-  width: 100%;
-  padding: 22px;
-  background: #f5f7f8;
+  padding: 17px 20px;
+
+  background: #f8f9fa;
+
   border: 2px solid #bcefed;
-  border-radius: 15px;
+  border-radius: 12px;
+
   box-sizing: border-box;
 `;
 
 export const FAQQuestion = styled.h3`
-  margin: 0 0 12px;
+  margin: 0 0 8px;
+
   font-size: 15px;
+  line-height: 1.35;
   font-weight: 700;
+
   color: #111827;
 `;
 
 export const FAQAnswer = styled.p`
   margin: 0;
-  font-size: 14px;
+
+  font-size: 13px;
   line-height: 1.5;
-  color: #333;
+
+  color: #5f6673;
 `;
 
 export const SupportSection = styled.section`
-  margin-top: 48px;
+  margin-top: 25px;
+
+  padding-top: 22px;
+
+  border-top: 2px solid #dceeed;
 `;
 
 export const SupportTitle = styled.h2`
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin: 0 0 25px;
+  gap: 10px;
+
+  margin: 0 0 12px;
+
   font-size: 18px;
+  line-height: 1.3;
+
   color: #111827;
 `;
 
 export const SupportText = styled.p`
   margin: 0;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #333;
+
+  max-width: 850px;
+
+  font-size: 13px;
+  line-height: 1.55;
+
+  color: #5f6673;
 `;

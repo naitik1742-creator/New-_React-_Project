@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { useFormik } from "formik";
+
 import DashboardLayout from "../components/DashboardLayout";
-
-
 
 import {
   SecurityPageCard,
@@ -22,137 +22,308 @@ import {
   SecurityInfoIcon,
   SecurityInfoCardTitle,
   SecurityInfoText,
+  ErrorText,
 } from "../theme/styled";
 
+import SecuritySchema from "../validation/SecuritySchema";
+
 function Security() {
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const formik = useFormik({
+    initialValues: {
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
+
+    validationSchema: SecuritySchema,
+
+    onSubmit: (values, { resetForm }) => {
+      setMessage("");
+      setErrorMessage("");
+
+      const loggedInUser =
+        JSON.parse(
+          localStorage.getItem("loggedInUser")
+        ) || null;
+
+      if (!loggedInUser) {
+        setErrorMessage(
+          "No logged-in user found."
+        );
+        return;
+      }
+
+      if (
+        loggedInUser.password !==
+        values.currentPassword
+      ) {
+        setErrorMessage(
+          "Current password is incorrect."
+        );
+        return;
+      }
+
+      if (
+        values.currentPassword ===
+        values.newPassword
+      ) {
+        setErrorMessage(
+          "New password must be different from current password."
+        );
+        return;
+      }
+
+      const updatedUser = {
+        ...loggedInUser,
+        password: values.newPassword,
+      };
+
+      localStorage.setItem(
+        "loggedInUser",
+        JSON.stringify(updatedUser)
+      );
+
+      const registeredUsers =
+        JSON.parse(
+          localStorage.getItem("registeredUsers")
+        ) || [];
+
+      const updatedUsers =
+        registeredUsers.map((user) => {
+          if (
+            user.email.toLowerCase() ===
+            loggedInUser.email.toLowerCase()
+          ) {
+            return {
+              ...user,
+              password: values.newPassword,
+            };
+          }
+
+          return user;
+        });
+
+      localStorage.setItem(
+        "registeredUsers",
+        JSON.stringify(updatedUsers)
+      );
+
+      setMessage(
+        "Password updated successfully."
+      );
+
+      resetForm();
+    },
+  });
 
   const handleClear = () => {
-    setCurrentPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
-  };
-
-  const handleUpdate = (e) => {
-    e.preventDefault();
-
-    if (newPassword !== confirmPassword) {
-      alert("New password and confirm password do not match.");
-      return;
-    }
-
-    alert("Password updated successfully.");
+    formik.resetForm();
+    setMessage("");
+    setErrorMessage("");
   };
 
   return (
-
     <DashboardLayout>
-    <SecurityPageCard>
-      <SecurityPageTitle>Security Settings</SecurityPageTitle>
+      <SecurityPageCard>
 
-      <SecurityIntroTitle>Security Settings</SecurityIntroTitle>
+        <SecurityPageTitle>
+          Security Settings
+        </SecurityPageTitle>
 
-      <SecurityDescription>
-        Keep your account secure by using a strong password and changing it
-        regularly.
-      </SecurityDescription>
+        <SecurityIntroTitle>
+          Security Settings
+        </SecurityIntroTitle>
 
-      <form onSubmit={handleUpdate}>
-        <SecurityFormGrid>
-          {/* CURRENT PASSWORD */}
-          <SecurityField>
-            <SecurityLabel>Current Password</SecurityLabel>
+        <SecurityDescription>
+          Keep your account secure by using a strong
+          password and changing it regularly.
+        </SecurityDescription>
 
-            <SecurityInput
-              type="password"
-              placeholder="Enter current password"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-            />
-          </SecurityField>
+        <form onSubmit={formik.handleSubmit}>
 
-          {/* NEW PASSWORD */}
-          <SecurityField>
-            <SecurityLabel>New Password</SecurityLabel>
+          <SecurityFormGrid>
 
-            <SecurityInput
-              type="password"
-              placeholder="Minimum 6 characters"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-            />
-          </SecurityField>
+            <SecurityField>
+              <SecurityLabel htmlFor="currentPassword">
+                Current Password
+              </SecurityLabel>
 
-          {/* CONFIRM PASSWORD */}
-          <SecurityField className="security-full-width">
-            <SecurityLabel>Confirm New Password</SecurityLabel>
+              <SecurityInput
+                id="currentPassword"
+                name="currentPassword"
+                type="password"
+                placeholder="Enter current password"
+                value={
+                  formik.values.currentPassword
+                }
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
 
-            <SecurityInput
-              type="password"
-              placeholder="Re-enter new password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </SecurityField>
-        </SecurityFormGrid>
+              {formik.touched.currentPassword &&
+                formik.errors.currentPassword && (
+                  <ErrorText>
+                    {formik.errors.currentPassword}
+                  </ErrorText>
+                )}
+            </SecurityField>
 
-        <SecurityButtonRow>
-          <SecurityClearButton type="button" onClick={handleClear}>
-            Clear
-          </SecurityClearButton>
 
-          <SecurityUpdateButton type="submit">
-            Update Password
-          </SecurityUpdateButton>
-        </SecurityButtonRow>
-      </form>
+            <SecurityField>
+              <SecurityLabel htmlFor="newPassword">
+                New Password
+              </SecurityLabel>
 
-      {/* SECURITY INFORMATION */}
-      <SecurityInfoSection>
-        <SecurityInfoTitle>Security Information</SecurityInfoTitle>
+              <SecurityInput
+                id="newPassword"
+                name="newPassword"
+                type="password"
+                placeholder="Minimum 8 characters"
+                value={
+                  formik.values.newPassword
+                }
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
 
-        <SecurityInfoGrid>
-          <SecurityInfoCard>
-            <SecurityInfoIcon>▣</SecurityInfoIcon>
+              {formik.touched.newPassword &&
+                formik.errors.newPassword && (
+                  <ErrorText>
+                    {formik.errors.newPassword}
+                  </ErrorText>
+                )}
+            </SecurityField>
 
-            <SecurityInfoCardTitle>
-              Account Created
-            </SecurityInfoCardTitle>
 
-            <SecurityInfoText>
-              8/31/2025
-            </SecurityInfoText>
-          </SecurityInfoCard>
+            <SecurityField className="security-full-width">
+              <SecurityLabel htmlFor="confirmPassword">
+                Confirm New Password
+              </SecurityLabel>
 
-          <SecurityInfoCard>
-            <SecurityInfoIcon>▣</SecurityInfoIcon>
+              <SecurityInput
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                placeholder="Re-enter new password"
+                value={
+                  formik.values.confirmPassword
+                }
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
 
-            <SecurityInfoCardTitle>
-              Last Updated
-            </SecurityInfoCardTitle>
+              {formik.touched.confirmPassword &&
+                formik.errors.confirmPassword && (
+                  <ErrorText>
+                    {formik.errors.confirmPassword}
+                  </ErrorText>
+                )}
+            </SecurityField>
 
-            <SecurityInfoText>
-              Never updated
-            </SecurityInfoText>
-          </SecurityInfoCard>
+          </SecurityFormGrid>
 
-          <SecurityInfoCard>
-            <SecurityInfoIcon>▣</SecurityInfoIcon>
 
-            <SecurityInfoCardTitle>
-              Session
-            </SecurityInfoCardTitle>
+          {errorMessage && (
+            <ErrorText>
+              {errorMessage}
+            </ErrorText>
+          )}
 
-            <SecurityInfoText>
-              Current browser session active
-            </SecurityInfoText>
-          </SecurityInfoCard>
-        </SecurityInfoGrid>
-      </SecurityInfoSection>
-    </SecurityPageCard>
+          {message && (
+            <div
+              style={{
+                marginTop: "15px",
+                color: "#22a39f",
+                fontSize: "14px",
+                fontWeight: "600",
+              }}
+            >
+              {message}
+            </div>
+          )}
 
+
+          <SecurityButtonRow>
+
+            <SecurityClearButton
+              type="button"
+              onClick={handleClear}
+            >
+              Clear
+            </SecurityClearButton>
+
+            <SecurityUpdateButton
+              type="submit"
+              disabled={formik.isSubmitting}
+            >
+              Update Password
+            </SecurityUpdateButton>
+
+          </SecurityButtonRow>
+
+        </form>
+
+
+        <SecurityInfoSection>
+
+          <SecurityInfoTitle>
+            Security Information
+          </SecurityInfoTitle>
+
+          <SecurityInfoGrid>
+
+            <SecurityInfoCard>
+              <SecurityInfoIcon>
+                ▣
+              </SecurityInfoIcon>
+
+              <SecurityInfoCardTitle>
+                Account Created
+              </SecurityInfoCardTitle>
+
+              <SecurityInfoText>
+                8/31/2025
+              </SecurityInfoText>
+            </SecurityInfoCard>
+
+
+            <SecurityInfoCard>
+              <SecurityInfoIcon>
+                ▣
+              </SecurityInfoIcon>
+
+              <SecurityInfoCardTitle>
+                Last Updated
+              </SecurityInfoCardTitle>
+
+              <SecurityInfoText>
+                Password updated
+              </SecurityInfoText>
+            </SecurityInfoCard>
+
+
+            <SecurityInfoCard>
+              <SecurityInfoIcon>
+                ▣
+              </SecurityInfoIcon>
+
+              <SecurityInfoCardTitle>
+                Session
+              </SecurityInfoCardTitle>
+
+              <SecurityInfoText>
+                Current browser session active
+              </SecurityInfoText>
+            </SecurityInfoCard>
+
+          </SecurityInfoGrid>
+
+        </SecurityInfoSection>
+
+      </SecurityPageCard>
     </DashboardLayout>
   );
 }
