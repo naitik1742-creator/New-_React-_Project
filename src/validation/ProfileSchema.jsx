@@ -1,68 +1,70 @@
 import * as Yup from "yup";
 
+import { validationRules } from "../validation/Common/validationRules";
+import { validationMessages } from "../validation/Common/validationMessage";
+
 const ProfileSchema = Yup.object({
   name: Yup.string()
     .trim()
     .matches(
-      /^[a-zA-Z\s-]{2,}$/,
-      "Name must be at least 2 letters long."
+      validationRules.name,
+      validationMessages.nameMinLength
     )
-    .required("Full name is required."),
+    .required(validationMessages.nameRequired),
 
   dob: Yup.date()
-    .typeError("Please enter a valid date.")
-    .required("Date of birth is required."),
+    .typeError(validationMessages.invalidDate)
+    .max(new Date(), "Date of birth cannot be in the future.")
+    .required(validationMessages.dobRequired),
 
   email: Yup.string()
     .trim()
     .matches(
-      /^[a-zA-Z0-9._%+-]+@[a-z]+\.[a-z]{2,}$/,
-      "Please enter a valid email address."
+      validationRules.email,
+      validationMessages.invalidEmail
     )
-    .required("Email is required."),
+    .required(validationMessages.emailRequired),
 
   phone: Yup.string()
+    .trim()
     .matches(
-      /^\+?[0-9\s-]{10,15}$/,
-      "Please enter a valid phone number."
+      validationRules.phone,
+      validationMessages.invalidPhone
     )
-    .required("Phone number is required."),
+    .required(validationMessages.phoneRequired),
 
   address: Yup.string()
     .trim()
-    .min(
-      5,
-      "Address must be at least 5 characters."
-    )
-    .required("Address is required."),
+    .min(5, validationMessages.invalidAddress)
+    .required(validationMessages.addressRequired),
 
   pin: Yup.string()
     .matches(
-      /^[0-9]{6}$/,
-      "PIN code must contain exactly 6 digits."
+      validationRules.pin,
+      validationMessages.invalidPin
     )
-    .required("PIN code is required."),
+    .required(validationMessages.pinRequired),
 
   city: Yup.string()
     .trim()
     .matches(
-      /^[a-zA-Z\s-]{2,}$/,
-      "Please enter a valid city."
+      validationRules.city,
+      validationMessages.invalidCity
     )
-    .required("City is required."),
+    .required(validationMessages.cityRequired),
 
   country: Yup.string()
     .trim()
     .matches(
-      /^[a-zA-Z\s-]{2,}$/,
-      "Please enter a valid country."
+      validationRules.country,
+      validationMessages.invalidCountry
     )
-    .required("Country is required."),
+    .required(validationMessages.countryRequired),
 
   github: Yup.string()
     .trim()
-    .url("Please enter a valid GitHub URL.")
-    .required("GitHub profile is required."),
+    .url(validationMessages.invalidGithub)
+    .required(validationMessages.githubRequired),
 });
 
 export default ProfileSchema;

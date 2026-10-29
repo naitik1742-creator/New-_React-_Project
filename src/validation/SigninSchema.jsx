@@ -1,28 +1,23 @@
 import * as Yup from "yup";
 
-const validationRules = {
-  email:
-     /^[a-zA-Z0-9._%+-]+@[a-z]+\.[a-z]{2,}$/,
-
-  password:
-    /^(?=.*[A-Za-z])(?=.*\d).{8,}$/,
-};
+import { validationRules } from "../validation/Common/validationRules";
+import { validationMessages } from "../validation/Common/validationMessage";;
 
 const SigninSchema = Yup.object({
   email: Yup.string()
     .trim()
     .matches(
       validationRules.email,
-      "Please enter a valid email address"
+      validationMessages.invalidEmail
     )
-    .required("Email is required"),
+    .required(validationMessages.emailRequired),
 
   password: Yup.string()
     .matches(
       validationRules.password,
-      "Password must contain at least 8 characters, including a letter and a number"
+      validationMessages.invalidPassword
     )
-    .required("Password is required"),
+    .required(validationMessages.passwordRequired),
 });
 
 export default SigninSchema;

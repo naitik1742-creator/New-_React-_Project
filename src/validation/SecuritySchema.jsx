@@ -1,22 +1,36 @@
 import * as Yup from "yup";
 
+import { validationRules } from "../validation/Common/validationRules";
+import { validationMessages } from "../validation/Common/validationMessage";
+
 const SecuritySchema = Yup.object({
   currentPassword: Yup.string()
-    .required("Current password is required."),
+    .required(validationMessages.currentPasswordRequired),
 
   newPassword: Yup.string()
     .matches(
-      /^(?=.*[A-Za-z])(?=.*\d).{8,}$/,
-      "Password must be at least 8 characters and contain a letter and number."
+      validationRules.password,
+      validationMessages.invalidPassword
     )
-    .required("New password is required."),
+    .required(validationMessages.newPasswordRequired)
+    .test(
+      "different-password",
+      "New password must be different from the current password.",
+      function (value) {
+        if (!value || !this.parent.currentPassword) {
+          return true;
+        }
+
+        return value !== this.parent.currentPassword;
+      }
+    ),
 
   confirmPassword: Yup.string()
     .oneOf(
       [Yup.ref("newPassword")],
-      "New password and confirm password do not match."
+      validationMessages.passwordMismatch
     )
-    .required("Please confirm your new password."),
+    .required(validationMessages.confirmPasswordRequired),
 });
 
 export default SecuritySchema;
