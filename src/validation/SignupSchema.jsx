@@ -1,86 +1,73 @@
 import * as Yup from "yup";
 
-const nameRegex = /^[a-zA-Z\s-]+$/;
+import { validationRules } from "../validation/Common/validationRules";
+import { validationMessages } from "../validation/Common/validationMessage";
+
+const validateName = (fieldName) =>
+  Yup.string()
+    .trim()
+    .required(
+      fieldName === "firstName"
+        ? "First name is required."
+        : "Last name is required."
+    )
+    .test(
+      "valid-name",
+      validationMessages.nameMinLength,
+      function (value) {
+        if (!value) {
+          return true;
+        }
+
+        if (/[^a-zA-Z\s-]/.test(value)) {
+          return this.createError({
+            message: validationMessages.invalidNameCharacters,
+          });
+        }
+
+        if (value.length < 2) {
+          return this.createError({
+            message: validationMessages.nameMinLength,
+          });
+        }
+
+        return true;
+      }
+    );
 
 const SignupSchema = Yup.object({
-  firstName: Yup.string()
+  firstName: validateName("firstName"),
+
+  lastName: validateName("lastName"),
+
+  email: Yup.string()
     .trim()
-    .required("First name is required.")
-    .test(
-      "valid-first-name",
-      "Name must be at least 2 letters long.",
-      function (value) {
-        if (!value) return true;
-
-    
-        if (!nameRegex.test(value)) {
-          return this.createError({
-            message: "Name should be in  letter only.",
-          });
-        }
-
-        if (value.length < 2) {
-          return this.createError({
-            message: "Name must be at least 2 letters long.",
-          });
-        }
-
-        return true;
-      }
-    ),
-
-  lastName: Yup.string()
-    .trim()
-    .required("Last name is required.")
-    .test(
-      "valid-last-name",
-      "Name must be at least 2 letters long.",
-      function (value) {
-        if (!value) return true;
-
-        if (!nameRegex.test(value)) {
-          return this.createError({
-            message: "Name should be in  letter only..",
-          });
-        }
-
-        if (value.length < 2) {
-          return this.createError({
-            message: "Name must be at least 2 letters long.",
-          });
-        }
-
-        return true;
-      }
-    ),
-
- email: Yup.string()
-  .trim()
-  .matches(
-    /^[a-zA-Z0-9._%+-]+@[a-z]+\.[a-z]{2,}$/,
-    "Please enter a valid email address."
-  )
-  .required("Email is required."),
+    .matches(
+      validationRules.email,
+      validationMessages.invalidEmail
+    )
+    .required(validationMessages.emailRequired),
 
   password: Yup.string()
     .matches(
-      /^(?=.*[A-Za-z])(?=.*\d).{8,}$/,
-      "Password must contain at least 8 characters, including a letter and a number."
+      validationRules.password,
+      validationMessages.invalidPassword
     )
-    .required("Password is required."),
+    .required(validationMessages.passwordRequired),
 
   confirmPassword: Yup.string()
     .oneOf(
       [Yup.ref("password")],
-      "Passwords do not match."
+      validationMessages.passwordMismatch
     )
-    .required("Please confirm your password."),
+    .required(validationMessages.confirmPasswordRequired),
 
   terms: Yup.boolean()
     .oneOf(
       [true],
-      "Please agree to the Terms."
-    ),
+      validationMessages.termsRequired
+    )
+    .required(validationMessages.termsRequired),
 });
 
 export default SignupSchema;
